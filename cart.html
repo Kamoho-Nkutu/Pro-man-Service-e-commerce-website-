@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Pro-man Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a class="flex items-center" href="index.html">
+                <img alt="Pro-man Services logo" class="h-8 w-8 mr-2" src="https://storage.googleapis.com/a1aa/image/bj0m-fnCBOpA12LGHQx1RH4B8WETlgB2K4XXI8Rsi4w.jpg" />
+                <span class="font-semibold text-gray-500 text-lg">Pro-man Services</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-4">
+                <a class="text-gray-500 hover:text-blue-500" href="index.html">Home</a>
+                <a class="text-gray-500 hover:text-blue-500" href="index.html#products">Products</a>
+                <a class="text-gray-500 hover:text-blue-500" href="About.html">About</a>
+                <a class="text-gray-500 hover:text-blue-500" href="Contact.html">Contact</a>
+                <a class="text-gray-500 hover:text-blue-500" href="finance.html">Finance Plan</a>
+                <a href="cart.html" class="relative text-gray-500 hover:text-blue-500">
+                    🛒 Cart <span id="cart-count" class="ml-1 bg-red-500 text-white px-2 rounded-full text-xs hidden">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Cart Section -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800">Your Shopping Cart</h1>
+        <div id="cart-items" class="mt-6 bg-white p-4 rounded shadow">
+            <p class="text-gray-600 text-center" id="empty-cart-message">Your cart is empty.</p>
+        </div>
+
+        <div class="mt-4 flex justify-between items-center">
+            <h2 class="text-lg font-semibold">Total: R<span id="total-price">0.00</span></h2>
+            <button id="payment-btn" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-400 hidden">
+                Proceed to Payment
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-white py-4 mt-8">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-600">© 2025 Pro-man Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsContainer = document.getElementById("cart-items");
+    const totalPriceElement = document.getElementById("total-price");
+    const paymentButton = document.getElementById("payment-btn");
+    const emptyCartMessage = document.getElementById("empty-cart-message");
+    const cartCount = document.getElementById("cart-count");
+
+    function updateCartDisplay() {
+        cartItemsContainer.innerHTML = "";
+        let totalPrice = 0;
+
+        if (cart.length === 0) {
+            emptyCartMessage.classList.remove("hidden");
+            paymentButton.classList.add("hidden");
+        } else {
+            emptyCartMessage.classList.add("hidden");
+            paymentButton.classList.remove("hidden");
+
+            cart.forEach((item, index) => {
+                totalPrice += parseFloat(item.price);
+
+                const cartItem = document.createElement("div");
+                cartItem.classList.add("flex", "items-center", "justify-between", "border-b", "py-4");
+
+                cartItem.innerHTML = `
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="h-16 w-16 object-cover rounded">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold">${item.name}</h3>
+                            <p class="text-gray-600">R${parseFloat(item.price).toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <button class="remove-item bg-red-500 text-white py-1 px-3 rounded hover:bg-red-400" data-index="${index}">Remove</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+        }
+
+        totalPriceElement.innerText = totalPrice.toFixed(2);
+        cartCount.innerText = cart.length;
+        cartCount.classList.toggle("hidden", cart.length === 0);
+    }
+
+    cartItemsContainer.addEventListener("click", function (event) {
+        if (event.target.classList.contains("remove-item")) {
+            const index = event.target.getAttribute("data-index");
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartDisplay();
+        }
+    });
+
+    updateCartDisplay();
+
+    // Redirect to payment page
+    paymentButton.addEventListener("click", function () {
+        window.location.href = "payment.html";
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartCount = document.getElementById("cart-count");
+
+    function updateCartCount() {
+        cartCount.innerText = cart.length;
+        cartCount.classList.toggle("hidden", cart.length === 0);
+    }
+
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            const productCard = this.closest(".product-card");
+            const product = {
+                name: productCard.querySelector("h2").innerText,
+                price: productCard.querySelector("p").innerText,
+                image: productCard.querySelector("img").src
+            };
+            cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+            alert(`${product.name} added to cart!`);
+        });
+    });
+
+    updateCartCount();
+
+    // Mobile Navigation Toggle
+    const navToggle = document.createElement("button");
+    navToggle.innerText = "☰";
+    navToggle.className = "md:hidden text-gray-500 text-2xl";
+    document.querySelector("header div").appendChild(navToggle);
+
+    navToggle.addEventListener("click", function () {
+        const navMenu = document.querySelector("nav");
+        navMenu.classList.toggle("hidden");
+    });
+});
+</script>

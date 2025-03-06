@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Plan - Pro-man Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a class="flex items-center" href="#">
+                <img alt="Pro-man Services logo" class="h-8 w-8 mr-2" src="https://storage.googleapis.com/a1aa/image/bj0m-fnCBOpA12LGHQx1RH4B8WETlgB2K4XXI8Rsi4w.jpg" />
+                <span class="font-semibold text-gray-500 text-lg">Pro-man Services</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-4">
+                <a class="text-gray-500 hover:text-blue-500" href="index.html">Home</a>
+                <a class="text-gray-500 hover:text-blue-500" href="Shopnow.html">Products</a>
+                <a class="text-gray-500 hover:text-blue-500" href="About.html">About</a>
+                <a class="text-gray-500 hover:text-blue-500" href="Contact.html">Contact</a>
+                
+            </nav>
+        </div>
+    </header>
+
+    <!-- Finance Plan Section -->
+    <div class="max-w-6xl mx-auto px-4 py-8 bg-white shadow-md mt-6 rounded-lg">
+        <h2 class="text-2xl font-bold text-gray-800">Finance Plan</h2>
+        
+        <label class="block text-gray-600 mt-4">Product Price (R):</label>
+        <input id="finance-price" type="number" class="border p-2 w-full mt-2" placeholder="Enter price" />
+
+        <label class="block text-gray-600 mt-4">Months:</label>
+        <input id="finance-months" type="number" class="border p-2 w-full mt-2" placeholder="Enter months" />
+
+        <button onclick="calculateAndDisplayFinance()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400 transition duration-300">
+            Calculate Monthly Payment
+        </button>
+
+        <p id="finance-result" class="font-semibold mt-4 text-gray-700"></p>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-white py-4 mt-8">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-600">© 2025 Pro-man Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateFinancePlan(price, months) {
+            // Assume a simple interest-based finance plan with a 5% annual interest rate
+            let interestRate = 0.05; // 5% annual interest
+            let monthlyRate = interestRate / 12; // Convert to monthly interest
+            let totalPayment = price * (1 + monthlyRate * months); // Simple interest calculation
+            let monthlyPayment = (totalPayment / months).toFixed(2); // Monthly installment
+
+            return monthlyPayment;
+        }
+
+        function calculateAndDisplayFinance() {
+            let price = parseFloat(document.getElementById("finance-price").value);
+            let months = parseInt(document.getElementById("finance-months").value);
+
+            if (!price || !months || months <= 0) {
+                document.getElementById("finance-result").innerText = "Please enter valid values.";
+                return;
+            }
+
+            let monthlyPayment = calculateFinancePlan(price, months);
+            document.getElementById("finance-result").innerText = `Monthly Payment: $${monthlyPayment}`;
+        }
+    </script>
+
+</body>
+</html>
+<!--                 price: productCard.querySelector("p").innerText,
+ -->

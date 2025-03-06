@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Pro-man Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a class="flex items-center" href="#">
+                <img alt="Pro-man Services logo" class="h-8 w-8 mr-2" src="https://storage.googleapis.com/a1aa/image/bj0m-fnCBOpA12LGHQx1RH4B8WETlgB2K4XXI8Rsi4w.jpg" />
+                <span class="font-semibold text-gray-500 text-lg">Pro-man Services</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-4">
+                <a class="text-gray-500 hover:text-blue-500" href="index.html">Home</a>
+                <a class="text-gray-500 hover:text-blue-500" href="Shopnow.html">Products</a>
+                <a class="text-gray-500 hover:text-blue-500" href="About.html">About</a>
+                <a class="text-gray-500 hover:text-blue-500" href="cart.html">Cart</a>
+                <a class="text-gray-500 hover:text-blue-500" href="finance.html">Finance Plan</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact Section -->
+    <div class="max-w-6xl mx-auto px-4 py-16">
+        <h1 class="text-4xl font-bold text-gray-800 text-center">Contact Us</h1>
+        <p class="mt-4 text-gray-600 text-center">We would love to hear from you!</p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded shadow">
+                <h2 class="text-2xl font-semibold text-gray-800">Our Services</h2>
+                <ul class="mt-4 text-gray-600">
+                    <li>Brick Work</li>
+                    <li>Plastering</li>
+                    <li>Painting</li>
+                    <li>Roofing</li>
+                    <li>Tiling Installation</li>
+                    <li>Renovation</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded shadow">
+                <h2 class="text-2xl font-semibold text-gray-800">Contact Information</h2>
+                <p class="mt-4 text-gray-600">Address: 46 Block 2 Thulani (Doornkop), 1683</p>
+                <p class="mt-2 text-gray-600">Phone: <a href="tel:0735485465" class="text-blue-500">073 548 5465</a></p>
+                <p class="mt-2 text-gray-600">Email: <a href="mail:fonondasizwe8@gmail.com" class="text-blue-500">fonondasizwe8@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-white py-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-600">© 2025 Pro-man Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Phone number copy to clipboard
+    const phoneNumber = document.querySelector("a[href^='tel']");
+    
+    if (phoneNumber) {
+        phoneNumber.addEventListener("click", function (event) {
+            event.preventDefault();
+            const tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            tempInput.value = phoneNumber.innerText;
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            alert("Phone number copied: " + phoneNumber.innerText);
+        });
+    }
+
+    // Mobile Navigation Toggle
+    const navToggle = document.createElement("button");
+    navToggle.innerText = "☰";
+    navToggle.className = "md:hidden text-gray-500 text-2xl";
+    document.querySelector("header div").appendChild(navToggle);
+
+    navToggle.addEventListener("click", function () {
+        const navMenu = document.querySelector("nav");
+        navMenu.classList.toggle("hidden");
+    });
+
+    console.log("Contact page script loaded successfully.");
+});
+
+    
+</script>

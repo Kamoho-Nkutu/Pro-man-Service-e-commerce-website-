@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Pro-man Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a class="flex items-center" href="#">
+                <img alt="Pro-man Services logo" class="h-8 w-8 mr-2" src="https://storage.googleapis.com/a1aa/image/bj0m-fnCBOpA12LGHQx1RH4B8WETlgB2K4XXI8Rsi4w.jpg" />
+                <span class="font-semibold text-gray-500 text-lg">Pro-man Services</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-4">
+                <a class="text-gray-500 hover:text-blue-500" href="index.html">Home</a>
+                <a class="text-gray-500 hover:text-blue-500" href="Shopnow.html">Products</a>
+                <a class="text-gray-500 hover:text-blue-500" href="#">About</a>
+                <a class="text-gray-500 hover:text-blue-500" href="Contact.html">Contact</a>
+                <a class="text-gray-500 hover:text-blue-500" href="finance.html">Finance Plan</a>
+                <a href="cart.html" class="relative text-gray-500 hover:text-blue-500">
+                    🛒 Cart <span id="cart-count" class="ml-1 bg-red-500 text-white px-2 rounded-full text-xs hidden">0</span>
+                </a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-gray-500 text-2xl">☰</button>
+        </div>
+        <nav id="mobile-menu" class="hidden flex flex-col space-y-2 p-4 bg-white md:hidden">
+            <a class="text-gray-500 hover:text-blue-500" href="index.html">Home</a>
+            <a class="text-gray-500 hover:text-blue-500" href="About.html">About</a>
+            <a class="text-gray-500 hover:text-blue-500" href="Contact.html">Contact</a>
+            <a class="text-gray-500 hover:text-blue-500" href="finance.html">Finance Plan</a>
+            <a href="cart.html" class="text-gray-500 hover:text-blue-500">🛒 Cart <span id="mobile-cart-count" class="ml-1 bg-red-500 text-white px-2 rounded-full text-xs hidden">0</span></a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="bg-white py-16 text-center">
+        <h1 class="text-4xl font-bold text-gray-800">Shop Our Products</h1>
+        <p class="mt-4 text-gray-600">Find the best construction Services and materials at unbeatable prices.</p>
+    </div>
+
+    <!-- Product Listings -->
+    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="product-card bg-white p-4 rounded shadow">
+            <img src="https://example.com/product1.jpg" alt="Product 1" class="w-full h-48 object-cover rounded">
+            <h2 class="mt-2 text-lg font-semibold">Bricks (50-pack)</h2>
+            <p class="text-gray-600">R150.00</p>
+            <button class="add-to-cart mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400">Add to Cart</button>
+        </div>
+        <div class="product-card bg-white p-4 rounded shadow">
+            <img src="https://example.com/product2.jpg" alt="Product 2" class="w-full h-48 object-cover rounded">
+            <h2 class="mt-2 text-lg font-semibold">Cement (50kg bag)</h2>
+            <p class="text-gray-600">R155.00</p>
+            <button class="add-to-cart mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400">Add to Cart</button>
+        </div>
+        <div class="product-card bg-white p-4 rounded shadow">
+            <img src="https://example.com/product3.jpg" alt="Product 3" class="w-full h-48 object-cover rounded">
+            <h2 class="mt-2 text-lg font-semibold">Roof Tiles (10-pack)</h2>
+            <p class="text-gray-600">R200.00</p>
+            <button class="add-to-cart mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-white py-4 mt-8">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-600">© 2025 Pro-man Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="shop.js"></script>
+</body>
+</html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartCount = document.getElementById("cart-count");
+
+        function updateCartCount() {
+            cartCount.innerText = cart.length;
+            cartCount.classList.toggle("hidden", cart.length === 0);
+        }
+
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                const productCard = this.closest(".product-card");
+                const product = {
+                    name: productCard.querySelector("h2").innerText,
+                    price: productCard.querySelector("p").innerText,
+                    image: productCard.querySelector("img").src
+                };
+                cart.push(product);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                updateCartCount();
+                alert(`${product.name} added to cart!`);
+            });
+        });
+
+        updateCartCount();
+
+        // Mobile Navigation Toggle
+        const navToggle = document.createElement("button");
+        navToggle.innerText = "☰";
+        navToggle.className = "md:hidden text-gray-500 text-2xl";
+        document.querySelector("header div").appendChild(navToggle);
+
+        navToggle.addEventListener("click", function () {
+            const navMenu = document.querySelector("nav");
+            navMenu.classList.toggle("hidden");
+        });
+    });
+</script>
